@@ -21,7 +21,7 @@ But this solution is only available when multicast network is enabled and port 5
 We tested this by two keycloak containers in same host.
 ![2](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/2.png)
 
-As you see from logs, after started the two keycloak instances discovered each other and clustered.
+As you see from logs, the two keycloak instances discovered each other and clustered.
 
 ## 2. TCPPING
 [TCPPING](http://jgroups.org/manual/#TCPPING_Prot) use TCP protocol and 7600 port should be exposed.
@@ -70,9 +70,12 @@ After started the ping data of all instances haven been saved in database, and f
 ![5](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/5.png)
 ![6](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/6.png)
 
----
+## One more thing
 I believe the above solutions are available for most scenes, but for some other scene this is not enough, e.g. kubernetes.
 
-In kubernetes, multicast is available only for the containers in same node, for the pods cross node multicast is not working, furthermore for a pod there is no static ip that can be used to configure TCPPING or JDBC_PING.
+In kubernetes, multicast is available only for the containers in same node, for the pods cross node multicast is not working, furthermore for a pod there is no static ip can be used to configure TCPPING or JDBC_PING.
 
-But that's ok because we can use [KUBE_PING](http://jgroups.org/manual/#_kube_ping) in kubernetes. And also don't worry, KUBE_PING is not the only choice, actually JDBC_PING is another option. In the attached JDBC_PING.cli we have handled this,  if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP environment variable, the pod ip will be used, that means in kubernetes you can just set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
+But that's ok because we can use [KUBE_PING](http://jgroups.org/manual/#_kube_ping) in kubernetes. 
+
+Actually JDBC_PING is another option besides KUBE_PING. In the JDBC_PING.cli mentioned above we have handled this,  if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP environment variable, the pod ip will be used, that means in kubernetes you can  simply set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
+But that's ok because we can use [KUBE_PING](http://jgroups.org/manual/#_kube_ping) in kubernetes. , KUBE_PING is not the only choice, actually JDBC_PING is another option. In the attached JDBC_PING.cli we have handled this,  if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP environment variable, the pod ip will be used, that means in kubernetes you can just set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
