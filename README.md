@@ -1,13 +1,14 @@
 # Keycloak Cluster Setup And Configuration
 
-Through some efforts we achieved keycloak cluster setting in some scenes, maybe you guys have done this by some solutions but hope this can help you anyway.
+Through some efforts we achieved keycloak cluster setting in some scenes, maybe you guys have done this by some solutions but still hope this can help you or give you some idea.
 
-We are using 4.8.3.Final docker image in our deployment, using this version because RH-SSO 7.3.0.GA is derived from 4.8.3.Final(please refer to https://www.keycloak.org/support.html) and we believe this is a rather stable build.
+We are using 4.8.3.Final docker image in our deployment, using this version because RH-SSO 7.3.0.GA is derived from 4.8.3.Final(please refer to https://www.keycloak.org/support.html) so we believe this is a LTS build.
 
-Also we did some extensions base on the official docker image, including custom theme, custom user federation, but the two cli script files is the most important matter for this mail, here are the two files [TCPPING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/TCPPING.cli) and [JDBC_PING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/JDBC_PING.cli).
+We did some extensions base on the [official docker image](https://hub.docker.com/r/jboss/keycloak/), including custom theme, custom user federation, but the two cli script files is the most important matter for this, here are the two files [TCPPING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/TCPPING.cli) and [JDBC_PING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/JDBC_PING.cli).
+
 ![0](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/0.jpg)
 
-First of all we have to know that for a keycloak cluster, all keycloak instances should use same database and this is very simple, another thing is about cache(generally there are two kinds of cache in keycloak, 1st is persistent data cache read from database aim to improve performance like realm/client/user, 2nd is the non-persistent data cache like sessions/clientSessions, the 2nd is very important for a cluster) which is a little bit complex to configure, we have to make sure the consistent of cache data in a cluster view.
+First of all we should know that for a keycloak cluster, all keycloak instances should use same database and this is very simple, another thing is about cache(generally there are two kinds of cache in keycloak, the 1st is persistent data cache read from database aim to improve performance like realm/client/user, the 2nd is the non-persistent data cache like sessions/clientSessions, the 2nd is very important for a cluster) which is a little bit complex to configure, we have to make sure the consistent of cache in a cluster view.
 
 Totally we have 3 solutions for clustering, and all of the solutions are base on the discovery protocols of [JGroups](http://jgroups.org/), as keycloak use a distributed cache called [Infinispan](http://infinispan.org/) and the Infinispan use JGroups to discover nodes.
 
