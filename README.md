@@ -14,6 +14,7 @@ Totally we have 3 solutions for clustering, and all of the solutions are base on
 
 ## 1. PING
 [PING](http://jgroups.org/manual/#PING) is the default enabled clustering solution of keycloak using UDP protocol, and you don't need to do any configuration for this.
+
 But this solution is only available when multicast network is enabled and port 55200 should be exposed, e.g. bare metals, VMs, docker containers in same host.
 ![1](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/1.png)
 We tested this by two keycloak containers in same host.
@@ -23,10 +24,15 @@ As you see from logs, after started the two keycloak instances discovered each o
 
 ## 2. TCPPING
 [TCPPING](http://jgroups.org/manual/#TCPPING_Prot) use TCP protocol and 7600 port should be exposed.
+
 This solution can be used when multicast is not available, e.g. deployments cross DC, containers cross host.
+
 We tested this by two keycloak containers cross host.
 ![3](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/3.png)
+
+
 And for our own solution we need to set three below environment variables for containers.
+
 ```
 #IP address of this host
 JGROUPS_DISCOVERY_EXTERNAL_IP=172.21.48.39
@@ -42,7 +48,10 @@ After started we can see the keycloak instances discovered each other and cluste
 ## 3. JDBC_PING
 [JDBC_PING](http://jgroups.org/manual/#_jdbc_ping) use TCP protocol and 7600 port should be expose which is similar as TCPPING, but the difference between them is, TCPPING require you configure the IP and port of all instances,  for JDBC_PING you just need to configure the IP and port of current instance, this is because in JDBC_PING solution each instance insert its own information into database and the instances discover peers by the ping data which is from database.
 
+
 We tested this by two keycloak containers cross host.
+
+
 ![3](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/3.png)
 ```
 And for our own solution we need to set two below environment variables for containers.
@@ -53,6 +62,7 @@ JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING
 ```
 
 After started the ping data of all instances haven been saved in database, and from logs we can see the keycloak instances discovered each other and clustered.
+
 ![5](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/5.png)
 ![6](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/6.png)
 
