@@ -27,7 +27,10 @@ As you see from logs, after started the two keycloak instances discovered each o
 
 This solution can be used when multicast is not available, e.g. deployments cross DC, containers cross host.
 
+
 We tested this by two keycloak containers cross host.
+
+
 ![3](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/3.png)
 
 
