@@ -7,11 +7,12 @@ Also we did some extensions base on the official docker image, including custom 
 ![0](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/0.jpg)
 
 First of all we have to know that for a keycloak cluster, all keycloak instances should use same database and this is very simple, another thing is about cache(generally there are two kinds of cache in keycloak, 1st is persistent data cache read from database aim to improve performance like realm/client/user, 2nd is the non-persistent data cache like sessions/clientSessions, the 2nd is very important for a cluster) which is a little bit complex to configure, we have to make sure the consistent of cache data in a cluster view.
-Totally we have 3 solutions for clustering, and all of the solutions are base on the discovery protocols of JGroups, as keycloak use a distributed cache called Infinispan and the Infinispan use JGroups to discover nodes.
+
+Totally we have 3 solutions for clustering, and all of the solutions are base on the discovery protocols of [JGroups](http://jgroups.org/), as keycloak use a distributed cache called [Infinispan](http://infinispan.org/) and the Infinispan use JGroups to discover nodes.
 
 
 ## 1. PING
-PING is the default enabled clustering solution of keycloak using UDP protocol, and you don't need to do any configuration for this.
+[PING](http://jgroups.org/manual/#PING) is the default enabled clustering solution of keycloak using UDP protocol, and you don't need to do any configuration for this.
 But this solution is only available when multicast network is enabled and port 55200 should be exposed, e.g. bare metals, VMs, docker containers in same host.
 ![1](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/1.png)
 We tested this by two keycloak containers in same host.
@@ -20,7 +21,7 @@ We tested this by two keycloak containers in same host.
 As you see from logs, after started the two keycloak instances discovered each other and clustered.
 
 ## 2. TCPPING
-TCPPING use TCP protocol and 7600 port should be exposed.
+[TCPPING](http://jgroups.org/manual/#TCPPING_Prot) use TCP protocol and 7600 port should be exposed.
 This solution can be used when multicast is not available, e.g. deployments cross DC, containers cross host.
 We tested this by two keycloak containers cross host.
 ![3](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/3.png)
@@ -38,7 +39,7 @@ After started we can see the keycloak instances discovered each other and cluste
 ![4](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/4.png)
 
 ## 3. JDBC_PING
-JDBC_PING use TCP protocol and 7600 port should be expose which is similar as TCPPING, but the difference between them is, TCPPING require you configure the IP and port of all instances,  for JDBC_PING you just need to configure the IP and port of current instance, this is because in JDBC_PING solution each instance insert its own information into database and the instances discover peers by the ping data which is from database.
+[JDBC_PING](http://jgroups.org/manual/#_jdbc_ping) use TCP protocol and 7600 port should be expose which is similar as TCPPING, but the difference between them is, TCPPING require you configure the IP and port of all instances,  for JDBC_PING you just need to configure the IP and port of current instance, this is because in JDBC_PING solution each instance insert its own information into database and the instances discover peers by the ping data which is from database.
 We tested this by two keycloak containers cross host.
 ![5](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/5.png)
 ```
@@ -56,4 +57,4 @@ image.png
 ---
 I believe the above solutions is available for most scenes, but for some scene this is enough, e.g. kubernetes.
 In kubernetes, multicast is available only for the containers in same node, for the pods cross node multicast is not working, furthermore for a pod there is no static ip that you can use to configure TCPPING or JDBC_PING.
-But that's ok because we can use KUBE_PING in kubernetes. And also don't worry, KUBE_PING is not the only choice, actually JDBC_PING is another option. In the attached JDBC_PING.cli we have handled this,  if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP environment variable, the pod ip will be used, that means in kubernetes you can just set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
+But that's ok because we can use [KUBE_PING](http://jgroups.org/manual/#_kube_ping) in kubernetes. And also don't worry, KUBE_PING is not the only choice, actually JDBC_PING is another option. In the attached JDBC_PING.cli we have handled this,  if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP environment variable, the pod ip will be used, that means in kubernetes you can just set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
