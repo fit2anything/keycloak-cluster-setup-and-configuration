@@ -1,10 +1,11 @@
 # Keycloak Cluster Setup And Configuration
 
-Through some efforts we achieved keycloak cluster setting in some scenes, maybe you guys have done this by some solutions but still hope this can help you or give you some idea.
+This repo is just for knowledge sharing.
+Through some efforts we achieved keycloak cluster in some scenes, maybe you guys have done this by some solutions but still hope this can help you or give you some idea.
 
 We are using 4.8.3.Final docker image in our deployment, using this version because RH-SSO 7.3.0.GA is derived from 4.8.3.Final(please refer to https://www.keycloak.org/support.html) so we believe this is a LTS build.
 
-We did some extensions base on the [official docker image](https://hub.docker.com/r/jboss/keycloak/), including custom theme, custom user federation, but the two cli script files is the most important matter for this, here are the two files [TCPPING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/TCPPING.cli) and [JDBC_PING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/JDBC_PING.cli).
+We did some extensions base on the [official docker image](https://hub.docker.com/r/jboss/keycloak/), including custom theme, custom user federation, but the two cli script files are the most important matter for this, here are the two files [TCPPING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/TCPPING.cli) and [JDBC_PING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/JDBC_PING.cli).
 
 ![0](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/0.jpg)
 
