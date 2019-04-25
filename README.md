@@ -75,12 +75,10 @@ After started the ping data of all instances haven been saved in database, and f
 ![6](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/6.png)
 
 ## One more thing
-I believe the above solutions are available for most scenes, but this is not enough for some other scene, e.g.kubernetes.
+I believe the above solutions are available for most scenes, but they are still not enough for some other scene, e.g.kubernetes.
 
 In kubernetes we can use [DNS_PING](https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md#openshift-example-with-dnsdns_ping) and [KUBE_PING](http://jgroups.org/manual/#_kube_ping) which work quite well in [practice](https://github.com/helm/charts/blob/master/stable/keycloak/templates/statefulset.yaml#L92). 
 
 Besides DNS_PING and KUBE_PING, we tried another solution for kubernetes. 
 
-In kubernetes multicast is available only for the containers in same node and it's not working if cross node, furthermore a pod has no static ip which can be used to configure TCPPING or JDBC_PING.
-
-But in the JDBC_PING.cli mentioned above we have handled this, if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP env, the pod ip will be used, that means in kubernetes you can simply set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
+In kubernetes multicast is available only for the containers in same node and it's not working if cross node, furthermore a pod has no static ip which can be used to configure TCPPING or JDBC_PING, but in the JDBC_PING.cli mentioned above we have handled this, if you don't set the JGROUPS_DISCOVERY_EXTERNAL_IP env, the pod ip will be used, that means in kubernetes you can simply set JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING then your keycloak cluster is ok.
