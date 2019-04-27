@@ -23,20 +23,20 @@ Totally we have 3 solutions for clustering, and all of the solutions are base on
 
 But this solution is only available when multicast network is enabled and port 55200 should be exposed, e.g. bare metals, VMs, docker containers in the same host.
 
-![1](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/ping-deployment.jpg)
+![1](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/ping-deployment.jpg)
 
 We tested this by two keycloak containers in same host.
 
 As you see from logs, the two keycloak instances discovered each other and clustered.
 
-![2](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/ping-log.png)
+![2](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/ping-log.png)
 
 ## 2. TCPPING
 [TCPPING](http://jgroups.org/manual/#TCPPING_Prot) use TCP protocol and 7600 port should be exposed.
 
 This solution can be used when multicast is not available, e.g. deployments cross DC, containers cross host.
 
-![3](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/tcp-ping-deployment.jpg)
+![3](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/tcp-ping-deployment.jpg)
 
 We tested this by two keycloak containers cross host.
 
@@ -53,7 +53,7 @@ JGROUPS_DISCOVERY_PROPERTIES=initial_hosts="172.21.48.4[7600],172.21.48.39[7600]
 ```
 
 After started we can see the keycloak instances discovered each other and clustered.
-![4](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/tcp-ping-log.png)
+![4](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/tcp-ping-log.png)
 
 ## 3. JDBC_PING
 [JDBC_PING](http://jgroups.org/manual/#_jdbc_ping) use TCP protocol and 7600 port should be exposed which is similar as TCPPING, but the difference between them is, TCPPING require you configure the IP and port of all instances,  for JDBC_PING you just need to configure the IP and port of current instance, this is because in JDBC_PING solution each instance insert its own information into database and the instances discover peers by the ping data which is from database.
@@ -73,8 +73,8 @@ JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING
 
 After started the ping data of all instances haven been saved in database, and from logs we can see the keycloak instances discovered each other and clustered.
 
-![5](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/jdbc-ping-data.png)
-![6](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/jdbc-ping-log.png)
+![5](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/jdbc-ping-data.png)
+![6](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/jdbc-ping-log.png)
 
 ## One more thing
 I believe the above solutions are available for most scenes, but they are still not enough for some other scene, e.g.kubernetes.
