@@ -22,7 +22,9 @@ Totally we have 3 solutions for clustering, and all of the solutions are base on
 [PING](http://jgroups.org/manual/#PING) is the default enabled clustering solution of keycloak using UDP protocol, and you don't need to do any configuration for this.
 
 But this solution is only available when multicast network is enabled and port 55200 should be exposed, e.g. bare metals, VMs, docker containers in the same host.
-![1](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/ping-deloyment.jpg)
+
+![1](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/ping-deployment.jpg)
+
 We tested this by two keycloak containers in same host.
 
 As you see from logs, the two keycloak instances discovered each other and clustered.
