@@ -4,7 +4,7 @@ This repo is just for knowledge sharing.
 
 Through some efforts we achieved keycloak cluster in some scenes, maybe you guys have done this with some solutions but still hope this can help you or give you some idea.
 
-We add two cli script files based on the [keycloak image](https://hub.docker.com/r/jboss/keycloak/) as per the [guide](https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md#adding-custom-discovery-protocols), these two files are the most important matter, here are the two files [TCPPING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/TCPPING.cli) and [JDBC_PING.cli](https://raw.githubusercontent.com/zhangliqiang/keycloak-cluster-setup-and-configuration/master/src/JDBC_PING.cli).
+We add two cli script files based on the [keycloak image](https://hub.docker.com/r/jboss/keycloak/) as per the [guide](https://github.com/jboss-dockerfiles/keycloak/blob/master/server/README.md#adding-custom-discovery-protocols), these two files are the most important matter, here are the two files [TCPPING.cli](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/TCPPING.cli) and [JDBC_PING.cli](https://raw.githubusercontent.com/fit2anything/keycloak-cluster-setup-and-configuration/master/src/JDBC_PING.cli).
 
 ```
 FROM jboss/keycloak:latest
