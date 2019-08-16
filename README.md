@@ -1,5 +1,8 @@
 # Keycloak Cluster Setup And Configuration
 
+![Total visitor](https://visitor-count-badge.herokuapp.com/total.svg?repo_id=keycloak-cluster-setup-and-configuration)
+![Visitors in today](https://visitor-count-badge.herokuapp.com/today.svg?repo_id=keycloak-cluster-setup-and-configuration)
+
 This repo is just for knowledge sharing.
 
 Through some efforts we achieved keycloak cluster in some scenes, maybe you guys have done this with some solutions but still hope this can help you or give you some idea.
